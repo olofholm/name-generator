@@ -23,7 +23,7 @@ export default async function (req, res) {
   if (description.trim().length === 0) {
     res.status(400).json({
       error: {
-        message: "Please enter a valid animal",
+        message: "Please enter a valid description",
       }
     });
     return;
@@ -31,9 +31,9 @@ export default async function (req, res) {
 
   try {
     const completion = await openai.createCompletion({
-      model: "text-davinci-003",
+      model: "text-curie-001",
       prompt: generatePrompt(description),
-      temperature: 0.8,
+      temperature: 0.1,
       max_tokens: 30,
     });
 
@@ -56,7 +56,7 @@ export default async function (req, res) {
 }
 
 function generatePrompt(description) {
-    return `Suggest three creative names for a fantasy character based on the description.
+    return `Suggest three creative names for a fantasy character based on a description.
     Description: A old Viking with one leg
     Names: Ragnar Ironfoot, Erik One-Leg, Bjorn the Crippled
     Description: A Germanic wizard

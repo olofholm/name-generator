@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
-import styles from "./index.module.css";
+import { TextField, Typography, Container, Button } from "@mui/material";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -34,25 +34,27 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <>
       <Head>
-        <title>OpenAI Quickstart</title>
+        <title>Name my character</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
       </Head>
 
-      <main className={styles.main}>
-        <h3>Name My Character</h3>
-        <form onSubmit={onSubmit}>
-          <input
+      <Container maxWidth="sm" sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <Typography variant="h3" mb={3} mt={10}>Name My Character</Typography>
+        <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+        <TextField id="outlined-basic" label="Description" variant="outlined" sx={{ width: "400px" }}
             type="text"
-            name="animal"
-            placeholder="Enter a character description"
+            name="description"
+            placeholder="Character Description (e.g. 'A powerful warlock')"
             value={descriptionInput}
             onChange={(e) => setDescriptionInput(e.target.value)}
           />
-          <input type="submit" value="Generate names" />
+          <br/>
+          <Button variant="contained" type="submit" value="Generate Names">Create</Button>
         </form>
-        <div className={styles.result}>{result}</div>
-      </main>
-    </div>
+        <Typography mt={2}>{result}</Typography>
+      </Container>
+    </>
   );
 }
