@@ -1,0 +1,16 @@
+h1 {
+  color: coral;
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  justify-content: center;
+  width: 25%;
+}
+
+.btn {
+  width: 60px;
+}
