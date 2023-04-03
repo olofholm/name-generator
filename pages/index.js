@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
+  const [descriptionInput, setDescriptionInput] = useState("");
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
@@ -14,16 +14,18 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ animal: animalInput }),
+        body: JSON.stringify({ description: descriptionInput }),
       });
 
       const data = await response.json();
+
+      //Check if response is good
       if (response.status !== 200) {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
       setResult(data.result);
-      setAnimalInput("");
+      setDescriptionInput("");
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -38,14 +40,14 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h3>Name my pet</h3>
+        <h3>Name My Character</h3>
         <form onSubmit={onSubmit}>
           <input
             type="text"
             name="animal"
-            placeholder="Enter an animal"
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+            placeholder="Enter a character description"
+            value={descriptionInput}
+            onChange={(e) => setDescriptionInput(e.target.value)}
           />
           <input type="submit" value="Generate names" />
         </form>

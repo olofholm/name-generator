@@ -6,6 +6,8 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export default async function (req, res) {
+
+  //If the API key is not configured correctly
   if (!configuration.apiKey) {
     res.status(500).json({
       error: {
@@ -15,8 +17,10 @@ export default async function (req, res) {
     return;
   }
 
-  const animal = req.body.animal || '';
-  if (animal.trim().length === 0) {
+  const description = req.body.description || '';
+
+  //Make sure request has content
+  if (description.trim().length === 0) {
     res.status(400).json({
       error: {
         message: "Please enter a valid animal",
@@ -28,12 +32,12 @@ export default async function (req, res) {
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generatePrompt(animal),
+      prompt: generatePrompt(description),
       temperature: 0.6,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
   } catch(error) {
-    // Consider adjusting the error handling logic for your use case
+    // Error handling logic
     if (error.response) {
       console.error(error.response.status, error.response.data);
       res.status(error.response.status).json(error.response.data);
@@ -48,15 +52,12 @@ export default async function (req, res) {
   }
 }
 
-function generatePrompt(animal) {
-  const capitalizedAnimal =
-    animal[0].toUpperCase() + animal.slice(1).toLowerCase();
-  return `Suggest three names for an animal that is a superhero.
-
-Animal: Cat
-Names: Captain Sharpclaw, Agent Fluffball, The Incredible Feline
-Animal: Dog
-Names: Ruff the Protector, Wonder Canine, Sir Barks-a-Lot
-Animal: ${capitalizedAnimal}
-Names:`;
+function generatePrompt(description) {
+    return `Suggest three names for a fantasy character from the description.
+    Description: A old Viking with one leg
+    Names: Ragnar Ironfoot, Erik One-Leg, Bjorn the Crippled
+    Description: A Germanic wizard
+    Names: Grimwald the Enchanter, Valtorin the Runecaster, Haldor the Arcanist
+    Description: ${description}
+    Names:`;
 }
