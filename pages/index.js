@@ -75,7 +75,7 @@ export default function Home() {
     <ThemeProvider theme={theme}>
       <GlobalStyles styles={{ body: { backgroundColor: "#fefce8" }}}/>
       <Head>
-        <title>Name my character</title>
+        <title>Name Generator</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
       </Head>
 
@@ -97,7 +97,7 @@ export default function Home() {
         <Typography variant="h5" mt={2}>{result1}</Typography>
         <Typography variant="h5" mt={1}>{result2}</Typography>
         <Typography variant="h5" mt={1} mb={2}>{result3}</Typography>
-          {loadingImage ? (<CircularProgress />) : (<Paper elevation={3}><img src={imageUrl}></img></Paper>)}
+          {loadingImage ? (<CircularProgress />) : (<Paper elevation={8} sx={{height: "254px", width: "254px"}}><img src={imageUrl} style={{borderRadius: "5px"}}></img></Paper>)}
       </Container>
     </ThemeProvider>
   );
