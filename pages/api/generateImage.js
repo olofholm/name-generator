@@ -30,14 +30,13 @@ export default async function (req, res) {
   }
 
   try {
-    const completion = await openai.createCompletion({
-      model: "text-curie-001",
+    const completion = await openai.createImage({
       prompt: generatePrompt(description),
-      temperature: 1,
-      max_tokens: 30,
+      n: 1,
+      size: "256x256",
     });
 
-    res.status(200).json({ result: completion.data.choices[0].text });
+    res.status(200).json({ result: completion.data.data[0].url });
   } catch(error) {
     // Error handling logic
     if (error.response) {
@@ -55,11 +54,5 @@ export default async function (req, res) {
 }
 
 function generatePrompt(description) {
-    return `Suggest three creative names for a fantasy character based on a description. Seperate the names by ',' and dont use 'and'.
-    Description: A old Viking with one leg
-    Names: Ragnar Ironfoot, Erik One-Leg, Bjorn the Crippled
-    Description: A Germanic wizard
-    Names: Grimwald the Enchanter, Valtorin the Runecaster, Haldor the Arcanist
-    Description: ${description}
-    Names:`;
+    return `A full body realistic high quality fantsy picture of ${description}`;
 }

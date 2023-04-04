@@ -1,16 +1,21 @@
 import Head from "next/head";
 import { useState } from "react";
-import { TextField, Typography, Container, Button, ThemeProvider, GlobalStyles } from "@mui/material";
+import { TextField, Typography, Container, Button, ThemeProvider, GlobalStyles, CircularProgress } from "@mui/material";
 import Header from "./components/header";
 import theme from "./theme";
-import { Margin } from "@mui/icons-material";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
-  const [result, setResult] = useState();
+  const [result1, setResult1] = useState();
+  const [result2, setResult2] = useState();
+  const [result3, setResult3] = useState();
+  const [imageUrl, setImageUrl] = useState();
+  const [loadingImage, setLoadingImage] = useState(false);
 
   async function onSubmit(event) {
     event.preventDefault();
+    setLoadingImage(true);
+
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -27,8 +32,38 @@ export default function Home() {
         throw data.error || new Error(`Request failed with status ${response.status}`);
       }
 
-      setResult(data.result);
+      let names = data.result.split(',');
+      
+      setResult1(names[0]);
+      setResult2(names[1]);
+      setResult3(names[2]);
+
       setDescriptionInput("");
+    } catch(error) {
+      // Consider implementing your own error handling logic here
+      console.error(error);
+      alert(error.message);
+    }
+
+    try {
+      const response = await fetch("/api/generateImage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ description: descriptionInput }),
+      });
+
+      const data = await response.json();
+      setLoadingImage(false);
+
+      //Check if response is good
+      if (response.status !== 200) {
+        throw data.error || new Error(`Request failed with status ${response.status}`);
+      }
+
+      setImageUrl(data.result);
+
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -47,7 +82,7 @@ export default function Home() {
       <Header/>
 
       <Container maxWidth="sm" sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <Typography variant="h4" mb={3} mt={10}>Name My Character</Typography>
+        <Typography variant="h4" mb={3} mt={6}>Name My Character</Typography>
         <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <TextField id="outlined-basic" label="Description" variant="outlined" sx={{ width: "400px"}}
             type="text"
@@ -59,7 +94,10 @@ export default function Home() {
           <br/>
           <Button variant="contained" type="submit" value="Generate Names">Create</Button>
         </form>
-        <Typography mt={2}>{result}</Typography>
+        <Typography variant="h5" mt={2}>{result1}</Typography>
+        <Typography variant="h5" mt={1}>{result2}</Typography>
+        <Typography variant="h5" mt={1} mb={2}>{result3}</Typography>
+        {loadingImage ? (<CircularProgress />) : (<img src={imageUrl}></img>)}
       </Container>
     </ThemeProvider>
   );
