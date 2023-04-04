@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useState } from "react";
 import { TextField, Typography, Container, Button, ThemeProvider, GlobalStyles, CircularProgress, Paper } from "@mui/material";
 import Header from "./components/header";
-import theme from "./theme";
+import theme from "./styles/theme";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
