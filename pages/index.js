@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useState } from "react";
-import { TextField, Typography, Container, Button, ThemeProvider, GlobalStyles, CircularProgress } from "@mui/material";
+import { TextField, Typography, Container, Button, ThemeProvider, GlobalStyles, CircularProgress, Paper } from "@mui/material";
 import Header from "./components/header";
 import theme from "./theme";
 
@@ -97,7 +97,7 @@ export default function Home() {
         <Typography variant="h5" mt={2}>{result1}</Typography>
         <Typography variant="h5" mt={1}>{result2}</Typography>
         <Typography variant="h5" mt={1} mb={2}>{result3}</Typography>
-        {loadingImage ? (<CircularProgress />) : (<img src={imageUrl}></img>)}
+          {loadingImage ? (<CircularProgress />) : (<Paper elevation={3}><img src={imageUrl}></img></Paper>)}
       </Container>
     </ThemeProvider>
   );
