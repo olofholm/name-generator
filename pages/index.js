@@ -1,8 +1,9 @@
 import Head from "next/head";
 import { useState } from "react";
-import { TextField, Typography, Container, Button, ThemeProvider } from "@mui/material";
+import { TextField, Typography, Container, Button, ThemeProvider, GlobalStyles } from "@mui/material";
 import Header from "./components/header";
 import theme from "./theme";
+import { Margin } from "@mui/icons-material";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -37,13 +38,14 @@ export default function Home() {
 
   return (
     <ThemeProvider theme={theme}>
+      <GlobalStyles styles={{ body: { backgroundColor: "#fefce8" }}}/>
       <Head>
         <title>Name my character</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
       </Head>
 
       <Header/>
-    
+
       <Container maxWidth="sm" sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <Typography variant="h4" mb={3} mt={10}>Name My Character</Typography>
         <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
