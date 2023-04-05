@@ -56,9 +56,9 @@ export default async function (req, res) {
 
 function generatePrompt(description) {
     return `Suggest three creative names for a fantasy character based on a description. Seperate the names by ',' and dont use 'and'.
-    Description: A old Viking with one leg
+    Description: Old Viking with one leg
     Names: Ragnar Ironfoot, Erik One-Leg, Bjorn the Crippled
-    Description: A Germanic wizard
+    Description: Germanic wizard
     Names: Grimwald the Enchanter, Valtorin the Runecaster, Haldor the Arcanist
     Description: ${description}
     Names:`;

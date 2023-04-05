@@ -33,7 +33,7 @@ export default async function (req, res) {
     const completion = await openai.createImage({
       prompt: generatePrompt(description),
       n: 1,
-      size: "256x256",
+      size: "512x512",
     });
 
     res.status(200).json({ result: completion.data.data[0].url });

@@ -82,22 +82,24 @@ export default function Home() {
       <Header/>
 
       <Container maxWidth="sm" sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <Typography variant="h4" mb={3} mt={6}>Name My Character</Typography>
+        <Typography mt={1} sx={{textAlign: "center"}}>Welcome to this name and image generator powered by Open AI.<br/>
+        Enter a brief description and it will generate 3 names and one image based on your description. </Typography>
+        <Typography variant="h5" mb={1} mt={3} sx={{fontWeight: "bold", textAlign: "center"}}>Start now by typing a description</Typography>
         <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <TextField id="outlined-basic" label="Description" variant="outlined" sx={{ width: "400px"}}
+        <TextField id="outlined-basic" label="Description" variant="outlined" sx={{ width: "min(75vw, 400px)"}}
             type="text"
             name="description"
-            placeholder="Character Description (e.g. 'A powerful warlock')"
+            placeholder="Character Description (e.g. 'Evil wizard')"
             value={descriptionInput}
             onChange={(e) => setDescriptionInput(e.target.value)}
           />
           <br/>
           <Button variant="contained" type="submit" value="Generate Names">Create</Button>
         </form>
-        <Typography variant="h5" mt={2}>{result1}</Typography>
-        <Typography variant="h5" mt={1}>{result2}</Typography>
-        <Typography variant="h5" mt={1} mb={2}>{result3}</Typography>
-          {loadingImage ? (<CircularProgress />) : (<Paper elevation={8} sx={{height: "254px", width: "254px"}}><img src={imageUrl} style={{borderRadius: "5px"}}></img></Paper>)}
+        <Typography variant="h5" mt={2}><span style={{backgroundColor: "lightgrey"}}>{result1}</span></Typography>
+        <Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>{result2}</span></Typography>
+        <Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>{result3}</span></Typography>
+          {loadingImage ? (<CircularProgress />) : (<Paper elevation={8} sx={{height: "min(95vw, 512px)", width: "min(95vw, 512px)"}}><img src={imageUrl} style={{borderRadius: "5px", width: "min(95vw, 512px)", height: "min(95vw, 512px)"}}></img></Paper>)}
       </Container>
     </ThemeProvider>
   );
