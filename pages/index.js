@@ -1,8 +1,10 @@
 import Head from "next/head";
 import { useState } from "react";
-import { TextField, Typography, Container, Button, CircularProgress, Paper, GlobalStyles } from "@mui/material";
+import { TextField, Typography, Container, Button, GlobalStyles } from "@mui/material";
 import Header from "./components/header";
 import { useUser } from '@auth0/nextjs-auth0/client';
+import GeneratedImage from "./components/generatedImage";
+import ImageNotLoggedIn from "./components/imageNotLoggedIn";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -105,7 +107,11 @@ export default function Home() {
         <Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>{result2}</span></Typography>
         <Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>{result3}</span></Typography>
 
-        {loadingImage ? (<CircularProgress />) : (<Paper elevation={8} sx={{height: "min(95vw, 512px)", width: "min(95vw, 512px)"}}><img src={imageUrl} style={{borderRadius: "5px", width: "min(95vw, 512px)", height: "min(95vw, 512px)"}}></img></Paper>)}
+        {user ? 
+          (<GeneratedImage imageUrl={imageUrl} loadingImage={loadingImage}/>) :
+          (<ImageNotLoggedIn />)
+        }
+
       </Container>
     </>
   );
