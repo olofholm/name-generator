@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { useState } from "react";
-import { TextField, Typography, Container, Button, ThemeProvider, GlobalStyles, CircularProgress, Paper } from "@mui/material";
+import { TextField, Typography, Container, Button, CircularProgress, Paper, GlobalStyles } from "@mui/material";
 import Header from "./components/header";
-import theme from "../styles/theme";
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -11,6 +11,9 @@ export default function Home() {
   const [result3, setResult3] = useState();
   const [imageUrl, setImageUrl] = useState();
   const [loadingImage, setLoadingImage] = useState(false);
+  
+  const { user, error, isloading} = useUser();
+  console.log(user);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -72,7 +75,7 @@ export default function Home() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
+      <>
       <GlobalStyles styles={{ body: { backgroundColor: "#fefce8" }}}/>
       <Head>
         <title>Name Generator</title>
@@ -82,9 +85,9 @@ export default function Home() {
       <Header/>
 
       <Container maxWidth="sm" sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <Typography mt={1} sx={{textAlign: "center"}}>Welcome to this name and image generator powered by Open AI.<br/>
+        <Typography mt={1} sx={{textAlign: "center"}}>Welcome to this name and image generator powered by AI.<br/>
         Enter a brief description and it will generate 3 names and one image based on your description. </Typography>
-        <Typography variant="h5" mb={1} mt={3} sx={{fontWeight: "bold", textAlign: "center"}}>Start now by typing a description</Typography>
+        <Typography variant="h5" mb={1} mt={3} sx={{fontWeight: "bold", textAlign: "center"}}>Start now by typing a description!</Typography>
         <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <TextField id="outlined-basic" label="Description" variant="outlined" sx={{ width: "min(75vw, 400px)"}}
             type="text"
@@ -101,6 +104,6 @@ export default function Home() {
         <Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>{result3}</span></Typography>
           {loadingImage ? (<CircularProgress />) : (<Paper elevation={8} sx={{height: "min(95vw, 512px)", width: "min(95vw, 512px)"}}><img src={imageUrl} style={{borderRadius: "5px", width: "min(95vw, 512px)", height: "min(95vw, 512px)"}}></img></Paper>)}
       </Container>
-    </ThemeProvider>
+    </>
   );
 }
