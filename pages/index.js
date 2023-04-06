@@ -81,6 +81,10 @@ export default function Home() {
       <Head>
         <title>Name Generator</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
+        <meta
+        name="description"
+        content="Generate names and images with the power of creative AI. Great for fantasy and fiction inspiration."
+        />
       </Head>
 
       <Header user={user}/>
