@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { useState } from "react";
 import { TextField, Typography, Container, Button, GlobalStyles } from "@mui/material";
 import Header from "./components/header";
@@ -78,14 +77,6 @@ export default function Home() {
   return (
       <>
       <GlobalStyles styles={{ body: { backgroundColor: "#fefce8" }}}/>
-      <Head>
-        <title>Name Generator</title>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
-        <meta
-        name="description"
-        content="Generate names and images with the power of creative AI. Great for fantasy and fiction inspiration."
-        />
-      </Head>
 
       <Header user={user}/>
 
