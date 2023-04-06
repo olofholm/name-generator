@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextField, Typography, Container, Button, GlobalStyles } from "@mui/material";
+import { TextField, Typography, Container, Button, GlobalStyles, Box } from "@mui/material";
 import Header from "./components/header";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import GeneratedImage from "./components/generatedImage";
@@ -108,6 +108,12 @@ export default function Home() {
         }
 
       </Container>
+
+      <Box sx={{ flexGrow: 1, backgroundColor: "#4d7c0f" }} mt={4}>
+        <Typography sx={{ flexGrow: 1, color: "white", textAlign: "center" }} ml={2}>
+          Please contact <span style={{backgroundColor: "darkgreen"}}>support@world-generator.com</span> for support. This webpage is still in development.
+        </Typography>
+      </Box>
     </>
   );
 }
