@@ -54,5 +54,5 @@ export default async function (req, res) {
 }
 
 function generatePrompt(description) {
-    return `${description} in a fantasy setting ultra realistic grainy mystical painting`;
+    return `${description} in a epic fantasy setting ultra realistic grainy mystical painting`;
 }
