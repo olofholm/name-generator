@@ -48,30 +48,32 @@ export default function Home() {
       alert(error.message);
     }
 
-    if(user.email_verified) {
-      try {
-        const response = await fetch("/api/generateImage", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ description: descriptionInput }),
-        });
+    if(user) {
+      if(user.email_verified) {
+        try {
+          const response = await fetch("/api/generateImage", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ description: descriptionInput }),
+          });
 
-        const data = await response.json();
-        setLoadingImage(false);
+          const data = await response.json();
+          setLoadingImage(false);
 
-        //Check if response is good
-        if (response.status !== 200) {
-          throw data.error || new Error(`Request failed with status ${response.status}`);
+          //Check if response is good
+          if (response.status !== 200) {
+            throw data.error || new Error(`Request failed with status ${response.status}`);
+          }
+
+          setImageUrl(data.result);
+
+        } catch(error) {
+          // Consider implementing your own error handling logic here
+          console.error(error);
+          alert(error.message);
         }
-
-        setImageUrl(data.result);
-
-      } catch(error) {
-        // Consider implementing your own error handling logic here
-        console.error(error);
-        alert(error.message);
       }
     }
   }
@@ -104,9 +106,12 @@ export default function Home() {
         <Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>{result2}</span></Typography>
         <Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>{result3}</span></Typography>
 
-        {user.email_verified ? 
-          (<GeneratedImage imageUrl={imageUrl} loadingImage={loadingImage}/>) :
-          (<ImageNotLoggedIn />)
+        {user ?
+          (<>
+            {user.email_verified ? (<GeneratedImage imageUrl={imageUrl} loadingImage={loadingImage}/>) :
+            (<ImageNotLoggedIn />)}
+          </>) :
+          ((<ImageNotLoggedIn />)) 
         }
 
       </Container>
