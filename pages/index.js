@@ -48,7 +48,7 @@ export default function Home() {
       alert(error.message);
     }
 
-    if(user) {
+    if(user.email_verified) {
       try {
         const response = await fetch("/api/generateImage", {
           method: "POST",
@@ -104,7 +104,7 @@ export default function Home() {
         <Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>{result2}</span></Typography>
         <Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>{result3}</span></Typography>
 
-        {user ? 
+        {user.email_verified ? 
           (<GeneratedImage imageUrl={imageUrl} loadingImage={loadingImage}/>) :
           (<ImageNotLoggedIn />)
         }
