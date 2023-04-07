@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { TextField, Typography, Container, Button, GlobalStyles, Box } from "@mui/material";
+import { TextField, Typography, Container, Button, Box } from "@mui/material";
 import Header from "./components/header";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import GeneratedImage from "./components/generatedImage";
 import ImageNotLoggedIn from "./components/imageNotLoggedIn";
+import Footer from "./components/footer";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -79,9 +80,7 @@ export default function Home() {
   }
 
   return (
-      <>
-      <GlobalStyles styles={{ body: { backgroundColor: "#fefce8" }}}/>
-
+    <>
       <Header user={user}/>
 
       <Container maxWidth="sm" sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -113,14 +112,9 @@ export default function Home() {
           </>) :
           ((<ImageNotLoggedIn />)) 
         }
-
       </Container>
 
-      <Box sx={{ flexGrow: 1, backgroundColor: "#4d7c0f" }} mt={4}>
-        <Typography sx={{ flexGrow: 1, color: "white", textAlign: "center" }} ml={2}>
-          Please contact <span style={{backgroundColor: "darkgreen"}}>support@world-generator.com</span> for support. This webpage is still in development.
-        </Typography>
-      </Box>
+      <Footer />
     </>
   );
 }
