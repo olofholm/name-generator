@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { TextField, Typography, Container, Button, Box } from "@mui/material";
-import Header from "./components/header";
+import Header from "../components/header";
 import { useUser } from '@auth0/nextjs-auth0/client';
-import GeneratedImage from "./components/generatedImage";
-import ImageNotLoggedIn from "./components/imageNotLoggedIn";
-import Footer from "./components/footer";
+import GeneratedImage from "../components/generatedImage";
+import ImageNotLoggedIn from "../components/imageNotLoggedIn";
+import Footer from "../components/footer";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
