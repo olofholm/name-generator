@@ -2,12 +2,14 @@ import Head from "next/head";
 import theme from "../styles/theme";
 import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { ThemeProvider } from "@emotion/react";
+import { GlobalStyles } from "@mui/material";
 
 export default function MyApp({ Component, pageProps }) {
   return (
     <UserProvider>
       <ThemeProvider theme={theme}>
         <Head>
+          <GlobalStyles styles={{ body: { backgroundColor: "#fefce8" }}}/>
           <title>Name Generator</title>
           <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
           <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
