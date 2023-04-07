@@ -11,7 +11,7 @@ export default function Header(props) {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Name & Image Generator
+            {props.title}
           </Typography>
           {props.user ? (<Button color="inherit" href="/api/auth/logout">Logout</Button>) : (<Button color="inherit" href="/api/auth/login">Login</Button>)}
         </Toolbar>

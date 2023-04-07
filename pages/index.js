@@ -81,7 +81,7 @@ export default function Home() {
 
   return (
     <>
-      <Header user={user}/>
+      <Header user={user} title="Name & Image Generator"/>
 
       <Container maxWidth="sm" sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <Typography mt={1} sx={{textAlign: "center"}}>Welcome to this name and image generator powered by AI.<br/>
