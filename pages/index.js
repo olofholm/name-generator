@@ -101,9 +101,9 @@ export default function Home() {
           <Button variant="contained" type="submit" value="Generate Names">Create</Button>
         </form>
 
-        <Typography variant="h5" mt={2}><span style={{backgroundColor: "lightgrey"}}>{result1}</span></Typography>
-        <Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>{result2}</span></Typography>
-        <Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>{result3}</span></Typography>
+        {result1 ? (<Typography variant="h5" mt={1}><span style={{backgroundColor: "lightgrey"}}>{result1}</span></Typography>) : (<Typography variant="h5" mt={1}><span style={{backgroundColor: "lightgrey"}}>Waiting on input...</span></Typography>)}
+        {result2 ? (<Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>{result2}</span></Typography>) : (<Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>Waiting on input...</span></Typography>)}
+        {result3 ? (<Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>{result3}</span></Typography>) : (<Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>Waiting on input...</span></Typography>)}
 
         {user ?
           (<>
