@@ -15,7 +15,7 @@ export default function Profile () {
         </>
       );
     }
-
+    
     //If the user is logged in
     else {
       return (
