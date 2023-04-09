@@ -19,6 +19,7 @@ export default function MyApp({ Component, pageProps }) {
           name="description"
           content="Generate names and images with the power of creative AI. Great for fantasy and fiction inspiration."
           />
+          <meta httpEquiv="Content-Language" content="en" />
         </Head>
 
         <Component {...pageProps} />
