@@ -5,7 +5,7 @@ import GeneratedImage from "../components/generatedImage";
 import Footer from "../components/footer";
 
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./firebase";
+import { auth } from "./api/firebase";
 import ImageNotLoggedIn from "../components/imageNotLoggedIn";
 
 export default function Home() {

@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
-import { signInWithGoogle, signOut } from "../pages/firebase"
+import { signInWithGoogle, signOut } from "../pages/api/firebase"
 
 export default function Header(props) {
   return (

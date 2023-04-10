@@ -1,6 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 import Link from "next/link";
-import { signInWithGoogle } from "../pages/firebase";
+import { signInWithGoogle } from "../pages/api/firebase";
 
 export default function ImageNotLoggedIn(props) {
   return (
