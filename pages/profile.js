@@ -1,10 +1,22 @@
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { Typography } from "@mui/material";
 import Header from "../components/header";
+import { useState, useEffect } from "react";
 
 export default function Profile () {
 
     const { user, error, isloading} = useUser();
+    const {tokens, setTokens} = useState(0);
+
+    function getTokens(user, context, callback){
+      user.app_metadata = user.app_metadata || {};
+      
+      setTokens(user.app_metadata.tokens);
+    }
+
+    useEffect(() => {
+      console.log(user);
+    }, []);
 
     //If the user is not logged in
     if(!user) {
@@ -12,6 +24,7 @@ export default function Profile () {
         <>
           <Header user={user} title="Profile" />
           <Typography variant="h4" sx={{textAlign: "center"}} mt={5} >Please Log in to view profile</Typography>
+          <Typography>{tokens}</Typography>
         </>
       );
     }
