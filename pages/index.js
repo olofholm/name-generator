@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextField, Typography, Container, Button, Box } from "@mui/material";
+import { TextField, Typography, Container, Button } from "@mui/material";
 import Header from "../components/header";
 import GeneratedImage from "../components/generatedImage";
 import Footer from "../components/footer";
