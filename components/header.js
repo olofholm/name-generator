@@ -5,6 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+import { signInWithGoogle, signOut } from "../pages/firebase"
+
 export default function Header(props) {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -13,7 +15,7 @@ export default function Header(props) {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {props.title}
           </Typography>
-          {props.user ? (<Button color="inherit" href="/api/auth/logout">Logout</Button>) : (<Button color="inherit" href="/api/auth/login">Login</Button>)}
+          {props.user ? (<Button color="inherit" onClick={signOut}>Logout</Button>) : (<Button color="inherit" onClick={signInWithGoogle}>Login</Button>)}
         </Toolbar>
       </AppBar>
     </Box>

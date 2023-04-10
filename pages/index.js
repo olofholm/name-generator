@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { TextField, Typography, Container, Button, Box } from "@mui/material";
 import Header from "../components/header";
-import { useUser } from '@auth0/nextjs-auth0/client';
 import GeneratedImage from "../components/generatedImage";
-import ImageNotLoggedIn from "../components/imageNotLoggedIn";
 import Footer from "../components/footer";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./firebase";
+import ImageNotLoggedIn from "../components/imageNotLoggedIn";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -13,8 +15,8 @@ export default function Home() {
   const [result3, setResult3] = useState();
   const [imageUrl, setImageUrl] = useState();
   const [loadingImage, setLoadingImage] = useState(false);
-  
-  const { user, error, isloading} = useUser();
+
+  const [user] = useAuthState(auth);
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -49,35 +51,30 @@ export default function Home() {
       alert(error.message);
     }
 
-    if(user) {
-      if(user.email_verified) {
-        try {
-          const response = await fetch("/api/generateImage", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ description: descriptionInput }),
-          });
+    try {
+      const response = await fetch("/api/generateImage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+          body: JSON.stringify({ description: descriptionInput }),
+      });
 
-          const data = await response.json();
-          setLoadingImage(false);
+      const data = await response.json();
+      setLoadingImage(false);
 
-          //Check if response is good
-          if (response.status !== 200) {
-            throw data.error || new Error(`Request failed with status ${response.status}`);
-          }
+      //Check if response is good
+      if (response.status !== 200) {
+        throw data.error || new Error(`Request failed with status ${response.status}`);
+      }
 
-          setImageUrl(data.result);
+      setImageUrl(data.result);
 
-        } catch(error) {
-          // Consider implementing your own error handling logic here
-          console.error(error);
-          alert(error.message);
-        }
+      } catch(error) {
+        console.error(error);
+        alert(error.message);
       }
     }
-  }
 
   return (
     <>
@@ -105,13 +102,7 @@ export default function Home() {
         {result2 ? (<Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>{result2}</span></Typography>) : (<Typography variant="h5"><span style={{backgroundColor: "lightgrey"}}>Waiting on input...</span></Typography>)}
         {result3 ? (<Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>{result3}</span></Typography>) : (<Typography variant="h5" mb={1}><span style={{backgroundColor: "lightgrey"}}>Waiting on input...</span></Typography>)}
 
-        {user ?
-          (<>
-            {user.email_verified ? (<GeneratedImage imageUrl={imageUrl} loadingImage={loadingImage}/>) :
-            (<ImageNotLoggedIn />)}
-          </>) :
-          ((<ImageNotLoggedIn />)) 
-        }
+        { user ? (<GeneratedImage imageUrl={imageUrl} loadingImage={loadingImage}/>) : (<ImageNotLoggedIn />)}
       </Container>
 
       <Footer />
