@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { getFirestore, collection } from "firebase/firestore";
+import { collection, addDoc, getDocs, getFirestore, doc } from "firebase/firestore"; 
 
 const firebaseConfig = {
   apiKey: "AIzaSyC0V4fMV1-ak2aaSoLkd8KhvKkgt4UbEAo",
@@ -22,23 +22,7 @@ const provider = new GoogleAuthProvider();
 export const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
-
-      const user = result.user;
-      if (user) {
-        const userId = user.uid;
-        const tokens = 5;
-        const usersCollection = collection(db, "users");
-  
-        usersCollection.doc(userId).get().then((doc) => {
-          if (!doc.exists) {
-            usersCollection.doc(userId).set({
-            tokenNumber: tokenNumber,
-            });
-            console.log('Set')
-          }
-  });
-}
-
+      initTokens(result.user.uid);
     })
     .catch((error) => 
       alert(error));
@@ -47,4 +31,26 @@ export const signInWithGoogle = () => {
 //Sign the user out
 export const signOut = () => {
   auth.signOut();
+}
+
+async function initTokens (userId) {
+  const collectionRef = collection(db, "users");
+  const data = await getDocs(collectionRef);
+  const docList = data.docs.map((doc) => ({...doc.data(), id: doc.id}));
+  const findDoc = docList.find((doc) => doc.userId === userId);
+
+  if(!findDoc) {
+    try {
+      const docRef = await addDoc(collectionRef, {
+        userId: userId,
+        tokens: 5
+      });
+      console.log("Document written with ID: ", docRef.id);
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
+  else {
+    console.log(findDoc.tokens);
+  }
 }
