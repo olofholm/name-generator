@@ -6,5 +6,9 @@ const db = admin.firestore();
 exports.createUserDocument = functions.auth.user().onCreate((user) => {
   db.collection("users")
     .doc(user.uid)
-    .set({ tokens: 5 });
+    .set({ 
+      tokens: 5,
+      name: user.displayName,
+      email: user.email    
+    });
 });
