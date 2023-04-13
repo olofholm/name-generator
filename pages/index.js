@@ -87,14 +87,15 @@ export default function Home() {
       }
     }
 
-    async function getTokens() {
+  //Call to get the current users token count, returns number of tokens
+  async function getTokens() {
       try {
         const response = await axios.get(`https://us-central1-world-generator.cloudfunctions.net/readTokens?documentId=${user.uid}`);
         return Number(response.data);
       } catch (error) {
         alert('Function error:', error);
       }
-    }
+  }
   
   
   return (

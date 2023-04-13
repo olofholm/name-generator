@@ -36,11 +36,7 @@ exports.decreaseTokens = functions.https.onRequest((req, res) => {
 
       const data = doc.data();
       const tokens = data.tokens;
-
-      if (!tokens || tokens <= 0) {
-        return res.status(400).send('Tokens value must be above 0');
-      }
-
+      
       // Decrease the tokens value in the document
       return docRef.update({ tokens: admin.firestore.FieldValue.increment(-1) });
     })
