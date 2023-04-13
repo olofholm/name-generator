@@ -20,6 +20,15 @@ export default function Home() {
 
   const [user] = useAuthState(auth);
 
+  auth.onAuthStateChanged(function(user) {
+    if (user) {
+      updateUserTokens();
+    } else {
+      setTokens(0);
+    }
+  });
+
+  //When user submits a create request for the AI
   async function onSubmit(event) {
     event.preventDefault();
     setLoadingImage(true);
@@ -119,7 +128,7 @@ export default function Home() {
     const toks = await getTokens();
     setTokens(toks);
   }
-  
+
   return (
     <>
       <Header user={user} title="Name & Image Generator"/>
