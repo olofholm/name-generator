@@ -138,8 +138,8 @@ export default function Home() {
         Enter a brief description and it will generate 3 names and one image based on your description. </Typography>
 
         <Typography variant="h5" mb={1} mt={3} sx={{fontWeight: "bold", textAlign: "center"}}>Start now by typing a description!</Typography>
-        <Typography variant="h6">Tokens: {tokens}</Typography>
-        <Typography variant="h7" mb={1}>If you just registered your account tokens might take a couple of seconds to populate.</Typography>
+        <Typography variant="h6" sx={{fontWeight: "bold"}}>Tokens: {tokens}</Typography>
+        <Typography variant="h7" mb={1} sx={{textAlign: "center"}}>Tokens might take a couple of seconds to populate.</Typography>
 
         <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <TextField id="outlined-basic" label="Description" variant="outlined" sx={{ width: "min(75vw, 400px)"}}
