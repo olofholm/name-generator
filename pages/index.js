@@ -16,6 +16,7 @@ export default function Home() {
   const [result3, setResult3] = useState();
   const [imageUrl, setImageUrl] = useState();
   const [loadingImage, setLoadingImage] = useState(false);
+  const [tokens, setTokens] = useState();
 
   const [user] = useAuthState(auth);
 
@@ -23,6 +24,7 @@ export default function Home() {
     event.preventDefault();
     setLoadingImage(true);
 
+    //Get names
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
@@ -52,13 +54,16 @@ export default function Home() {
       alert(error.message);
     }
 
+    //Get Image
     if(user) {
 
+      //Check if user got tokens
       const tokenCount = await getTokens();
-      console.log(tokenCount);
       if(tokenCount <= 0) {
         alert("No tokens left...");
       }
+
+      //Call API
       else {
         try {
           const response = await fetch("/api/generateImage", {
@@ -78,6 +83,8 @@ export default function Home() {
           }
 
           setImageUrl(data.result);
+          await decreaseToken();
+          updateUserTokens();
 
           } catch(error) {
             console.error(error);
@@ -89,14 +96,29 @@ export default function Home() {
 
   //Call to get the current users token count, returns number of tokens
   async function getTokens() {
-      try {
-        const response = await axios.get(`https://us-central1-world-generator.cloudfunctions.net/readTokens?documentId=${user.uid}`);
-        return Number(response.data);
-      } catch (error) {
-        alert('Function error:', error);
-      }
+    try {
+      const response = await axios.get(`https://us-central1-world-generator.cloudfunctions.net/readTokens?documentId=${user.uid}`);
+      return Number(response.data);
+    } catch (error) {
+      console.log('Function error:', error);
+    }
   }
-  
+
+  //Call to remove one token from a user
+  async function decreaseToken() {
+    try {
+      const response = await axios.get(`https://us-central1-world-generator.cloudfunctions.net/decreaseTokens?documentId=${user.uid}`);
+      return response.data;
+    } catch (error) {
+      console.log('Function error:', error);
+    }
+  }
+
+  //Update the user tokens to see the right amount
+  async function updateUserTokens() {
+    const toks = await getTokens();
+    setTokens(toks);
+  }
   
   return (
     <>
@@ -107,6 +129,7 @@ export default function Home() {
         Enter a brief description and it will generate 3 names and one image based on your description. </Typography>
 
         <Typography variant="h5" mb={1} mt={3} sx={{fontWeight: "bold", textAlign: "center"}}>Start now by typing a description!</Typography>
+        <Typography variant="h6">Tokens: {tokens}</Typography>
 
         <form onSubmit={onSubmit} style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <TextField id="outlined-basic" label="Description" variant="outlined" sx={{ width: "min(75vw, 400px)"}}
@@ -126,7 +149,6 @@ export default function Home() {
 
         { user ? (<GeneratedImage imageUrl={imageUrl} loadingImage={loadingImage}/>) : (<ImageNotLoggedIn />)}
       </Container>
-      <Button onClick={getTokens}>Get Tokens</Button>
 
       <Footer />
     </>
