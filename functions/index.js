@@ -76,7 +76,7 @@ exports.readTokens = functions.https.onRequest((req, res) => {
     return doc; // return the document if it exists
   })
   .then((doc) => {
-    res.send(`Tokens: ${doc.data().tokens}`);
+    res.send(`${doc.data().tokens}`);
   })
   .catch((error) => {
     console.error('Error reading tokens:', error);

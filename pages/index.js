@@ -53,40 +53,47 @@ export default function Home() {
     }
 
     if(user) {
-      try {
-        const response = await fetch("/api/generateImage", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-            body: JSON.stringify({ description: descriptionInput }),
-        });
 
-        const data = await response.json();
-        setLoadingImage(false);
+      const tokenCount = await getTokens();
+      console.log(tokenCount);
+      if(tokenCount <= 0) {
+        alert("No tokens left...");
+      }
+      else {
+        try {
+          const response = await fetch("/api/generateImage", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+              body: JSON.stringify({ description: descriptionInput }),
+          });
 
-        //Check if response is good
-        if (response.status !== 200) {
-          throw data.error || new Error(`Request failed with status ${response.status}`);
-        }
+          const data = await response.json();
+          setLoadingImage(false);
 
-        setImageUrl(data.result);
+          //Check if response is good
+          if (response.status !== 200) {
+            throw data.error || new Error(`Request failed with status ${response.status}`);
+          }
 
-        } catch(error) {
-          console.error(error);
-          alert(error.message);
+          setImageUrl(data.result);
+
+          } catch(error) {
+            console.error(error);
+            alert(error.message);
+          }
         }
       }
     }
 
-    function getTokens() {
-      axios.get(`https://us-central1-world-generator.cloudfunctions.net/readTokens?documentId=${user.uid}`)
-        .then(response => {
-          console.log('Function response:', response.data);
-        })
-        .catch(error => {
-          console.error('Function error:', error);
-        });
+    async function getTokens() {
+      try {
+        const response = await axios.get(`https://us-central1-world-generator.cloudfunctions.net/readTokens?documentId=${user.uid}`);
+        return Number(response.data);
+      } catch (error) {
+        alert('Function error:', error);
+      }
     }
   
   
