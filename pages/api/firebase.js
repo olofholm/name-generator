@@ -32,25 +32,3 @@ export const signInWithGoogle = () => {
 export const signOut = () => {
   auth.signOut();
 }
-
-async function initTokens (userId) {
-  const collectionRef = collection(db, "users");
-  const data = await getDocs(collectionRef);
-  const docList = data.docs.map((doc) => ({...doc.data(), id: doc.id}));
-  const findDoc = docList.find((doc) => doc.userId === userId);
-
-  if(!findDoc) {
-    try {
-      const docRef = await addDoc(collectionRef, {
-        userId: userId,
-        tokens: 5
-      });
-      console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-  }
-  else {
-    console.log(findDoc.tokens);
-  }
-}

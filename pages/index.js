@@ -7,6 +7,7 @@ import Footer from "../components/footer";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./api/firebase";
 import ImageNotLoggedIn from "../components/imageNotLoggedIn";
+import axios from "axios";
 
 export default function Home() {
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -78,6 +79,17 @@ export default function Home() {
       }
     }
 
+    function getTokens() {
+      axios.get(`https://us-central1-world-generator.cloudfunctions.net/readTokens?documentId=${user.uid}`)
+        .then(response => {
+          console.log('Function response:', response.data);
+        })
+        .catch(error => {
+          console.error('Function error:', error);
+        });
+    }
+  
+  
   return (
     <>
       <Header user={user} title="Name & Image Generator"/>
@@ -106,6 +118,7 @@ export default function Home() {
 
         { user ? (<GeneratedImage imageUrl={imageUrl} loadingImage={loadingImage}/>) : (<ImageNotLoggedIn />)}
       </Container>
+      <Button onClick={getTokens}>Get Tokens</Button>
 
       <Footer />
     </>

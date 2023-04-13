@@ -13,7 +13,13 @@ exports.createUserDocument = functions.auth.user().onCreate((user) => {
     });
 });
 
+//Call to decrease a users tokens
 exports.decreaseTokens = functions.https.onRequest((req, res) => {
+  // Set CORS headers to allow requests from any origin
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, POST');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+
   const documentId = req.query.documentId; // get the document ID from the request query params
 
   if (!documentId) {
@@ -45,4 +51,35 @@ exports.decreaseTokens = functions.https.onRequest((req, res) => {
       console.error('Error decreasing tokens:', error);
       res.status(500).send('Error decreasing tokens');
     });
+});
+
+//Call to read a users tokens
+exports.readTokens = functions.https.onRequest((req, res) => {
+  // Set CORS headers to allow requests from any origin
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'GET, POST');
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+
+  const documentId = req.query.documentId; // get the document ID from the request query params
+
+  if (!documentId) {
+    return res.status(400).send('Missing required parameter: documentId');
+  }
+
+  const docRef = admin.firestore().collection('users').doc(documentId);
+
+  docRef.get()
+  .then((doc) => {
+    if (!doc.exists) {
+      return res.status(404).send('Document not found');
+    }
+    return doc; // return the document if it exists
+  })
+  .then((doc) => {
+    res.send(`Tokens: ${doc.data().tokens}`);
+  })
+  .catch((error) => {
+    console.error('Error reading tokens:', error);
+    res.status(500).send('Error reading tokens');
+  });
 });
