@@ -123,7 +123,7 @@ export default function Home() {
     }
   }
 
-  //Update the user tokens to see the right amount
+  //Update the user tokens to see the correct
   async function updateUserTokens() {
     const tok = await getTokens();
     setTokens(tok);
