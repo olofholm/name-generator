@@ -103,7 +103,7 @@ export default function Home() {
       }
     }
 
-  //Call to get the current users token count, returns number of tokens
+  //Call to get the current users token count and returns number of tokens
   async function getTokens() {
     try {
       const response = await axios.get(`https://us-central1-world-generator.cloudfunctions.net/readTokens?documentId=${user.uid}`);
