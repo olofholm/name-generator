@@ -23,7 +23,7 @@ exports.decreaseTokens = functions.https.onRequest((req, res) => {
   const documentId = req.query.documentId; // get the document ID from the request query params
 
   if (!documentId) {
-    return res.status(400).send('Missing required parameter: documentId');
+    return res.status(400).send('Missing required parameter: DocumentId');
   }
 
   const docRef = admin.firestore().collection('users').doc(documentId);
