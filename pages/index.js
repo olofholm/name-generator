@@ -113,7 +113,7 @@ export default function Home() {
     }
   }
 
-  //Call to remove one token from a user
+  //Call to remove one token from the user
   async function decreaseToken() {
     try {
       const response = await axios.get(`https://us-central1-world-generator.cloudfunctions.net/decreaseTokens?documentId=${user.uid}`);
