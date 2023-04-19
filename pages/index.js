@@ -28,7 +28,7 @@ export default function Home() {
     }
   });
 
-  //When user submits a create request for AI
+  //When user submits a create request for tehAI
   async function onSubmit(event) {
     event.preventDefault();
     setLoadingImage(true);
