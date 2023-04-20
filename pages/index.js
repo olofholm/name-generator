@@ -33,7 +33,7 @@ export default function Home() {
     event.preventDefault();
     setLoadingImage(true);
 
-    //Get names
+    //Get the names
     try {
       const response = await fetch("/api/generate", {
         method: "POST",
